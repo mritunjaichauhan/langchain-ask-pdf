@@ -5,7 +5,7 @@ from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.chains import load_qa_chain
+from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 
@@ -46,7 +46,8 @@ def main():
             docs = knowledge_base.similarity_search(user_question)
 
             llm = OpenAI()
-            chain = load_qa_chain(llm, chain_type="stuff")
+            # Use RetrievalQA or appropriate chain setup
+            chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff")
             with get_openai_callback() as cb:
                 try:
                     response = chain.run(input_documents=docs, question=user_question)

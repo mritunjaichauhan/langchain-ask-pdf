@@ -1,3 +1,4 @@
+tiktoken
 python-dotenv
 streamlit
 PyPDF2
